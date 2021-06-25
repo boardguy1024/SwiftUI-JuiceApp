@@ -11,6 +11,9 @@ struct CardView: View {
     
     var item: Item
     
+    @ObservedObject var tabData: TabViewModel
+    var animation: Namespace.ID
+    
     var body: some View {
         
         HStack {
@@ -25,7 +28,15 @@ struct CardView: View {
                     .fontWeight(.heavy)
                     .foregroundColor(.white)
                 
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                Button(action: {
+                    
+                    withAnimation(.spring()) {
+                        
+                        tabData.selectedItem = item
+                        tabData.isDetail.toggle()
+                    }
+                    
+                }, label: {
                     Text("Buy Now")
                         .fontWeight(.heavy)
                         .foregroundColor(Color(item.image))
@@ -44,6 +55,7 @@ struct CardView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(height: UIScreen.main.bounds.height / 3, alignment: .center)
+                .matchedGeometryEffect(id: item.image, in: animation)
             
         }
         .padding()
@@ -57,8 +69,4 @@ struct CardView: View {
     }
 }
 
-struct CardView_Previews: PreviewProvider {
-    static var previews: some View {
-        CardView(item: Item(title: "Title", price: "$0", discount: "0%", image: "p1"))
-    }
-}
+//

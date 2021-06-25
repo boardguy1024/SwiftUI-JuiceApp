@@ -15,6 +15,9 @@ struct Home: View {
         Item(title: "Besom Lemon Juice", price: "$20.99", discount: "10%", image: "p3")
     ]
     
+    @ObservedObject var tabData: TabViewModel
+    var animation: Namespace.ID
+    
     var body: some View {
         
         VStack {
@@ -24,13 +27,13 @@ struct Home: View {
                     Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
                         
                         Image(systemName: "line.horizontal.3.decrease")
-                            .font(.system(size: 24))
+                            .font(.system(size: 24, weight: .heavy))
                             .foregroundColor(.primary)
                         
                         Spacer()
                         
                         Image(systemName: "bag")
-                            .font(.system(size: 24))
+                            .font(.system(size: 24, weight: .heavy))
                             .foregroundColor(.primary)
                     }
                 }
@@ -40,14 +43,13 @@ struct Home: View {
                     .fontWeight(.heavy)
                     .foregroundColor(.primary)
             }
-            .background(Color.blue)
             .padding()
             
             ScrollView(.vertical, content: {
             
                 VStack (spacing: 20) {
                     ForEach(items) { item in
-                        CardView(item: item)
+                        CardView(item: item, tabData: self.tabData, animation: animation)
                     }
                 }
             })
@@ -57,11 +59,11 @@ struct Home: View {
     }
 }
 
-struct Home_Previews: PreviewProvider {
-    static var previews: some View {
-        Home()
-    }
-}
+//struct Home_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Home(tabData: TabViewModel())
+//    }
+//}
 
 // Model and Model Data
 
